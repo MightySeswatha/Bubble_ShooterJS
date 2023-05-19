@@ -3,33 +3,85 @@ window.onload = () => {
 
     var cannon = document.getElementById("cannon");
 
+    /*
     document.addEventListener('keydown', function (event) {
         var cannon_board_c = cannon_board.parentElement.getBoundingClientRect();
-        //console.log(cannon_board_c);
-        if (event.code == 'KeyD') {
-            // console.log("D");
+
+        if (event.code == 'KeyD' || event.code == 'ArrowRight') {
             let goLeft = cannon.offsetLeft
-            // console.log(goLeft);
             if (goLeft >= (cannon_board_c.width - cannon.getBoundingClientRect().width - 5)) { }
             else {
                 cannon.style.left = goLeft + 5 + "px"
             }
 
         }
-        else if (event.code == 'KeyA') {
-            //console.log("A");
+
+        else if (event.code == 'KeyA' || event.code == 'ArrowLeft') {
             let goLeft = cannon.offsetLeft
-            // console.log(goLeft);
             if (goLeft <= 0) { }
             else {
                 cannon.style.left = goLeft - 5 + "px"
             }
         }
-        /*Переделать чтобы можно было двигать пушку и стрелять одновременно*/
-        if (event.code == 'Space') {
+
+    });
+    */
+
+    var events = {};
+
+    document.addEventListener('keydown', function (e) {
+        events[e.keyCode] = true;
+        action();
+    });
+
+    document.addEventListener('keyup', function (e) {
+        events[e.keyCode] = false;
+    });
+
+    function action() {
+        /**/
+        if (events[37]) {
+            let goLeft = cannon.offsetLeft
+            if (goLeft <= 0) { }
+            else {
+                cannon.style.left = goLeft - 5 + "px"
+            }
+        }
+        /**/
+        if (events[39]) {
+            var cannon_board_c = cannon_board.parentElement.getBoundingClientRect();
+            let goLeft = cannon.offsetLeft
+            if (goLeft >= (cannon_board_c.width - cannon.getBoundingClientRect().width - 5)) { }
+            else {
+                cannon.style.left = goLeft + 5 + "px"
+            }
+        };
+        /**/
+        if (events[32]) {
             console.log("fire");
         }
-    });
+        /**/
+        else if (events[32] && events[37]) {
+            console.log('fire');
+
+            let goLeft = cannon.offsetLeft
+            if (goLeft <= 0) { }
+            else {
+                cannon.style.left = goLeft - 5 + "px"
+            }
+        }
+        /**/
+        else if (events[32] && events[39]) {
+            console.log('fire');
+
+            var cannon_board_c = cannon_board.parentElement.getBoundingClientRect();
+            let goLeft = cannon.offsetLeft
+            if (goLeft >= (cannon_board_c.width - cannon.getBoundingClientRect().width - 5)) { }
+            else {
+                cannon.style.left = goLeft + 5 + "px"
+            }
+        }
+    }
 
 
 
